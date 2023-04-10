@@ -1,8 +1,34 @@
 #include "main.h"
+#include "pros/adi.hpp"
+#include "pros/imu.hpp"
+#include "pros/motors.h"
+#include "variables.h"
 
 void initialize() {
+	//Motors
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "Hello PROS User!");
+	pros::Controller master(pros::E_CONTROLLER_MASTER);
+	pros::Motor LeftUp(LEFTUP, MOTOR_GEAR_BLUE, true);
+	pros::Motor LeftMiddle(LEFTMIDDLE, MOTOR_GEAR_BLUE);
+	pros::Motor LeftDown(LEFTDOWN, MOTOR_GEAR_BLUE, true);
+	pros::Motor RightUp(RIGHTUP, MOTOR_GEAR_BLUE);
+	pros::Motor RightMiddle(RIGHTMIDDLE, MOTOR_GEAR_BLUE, true);
+	pros::Motor RightDown(RIGHTDOWN, MOTOR_GEAR_BLUE);
+	pros::Motor Intake(INTAKE, MOTOR_GEAR_BLUE);
+	pros::Motor Cata(CATA, MOTOR_GEAR_RED);
+
+	//Sensors
+	pros::ADIEncoder TW_forw (FORW_TOP, FORW_BOTTOM);
+	pros::ADIEncoder TW_side (SIDE_TOP, SIDE_BOTTOM);
+	pros::ADIDigitalOut Left_string (LEFT_STRING);
+	pros::ADIDigitalOut Right_string (RIGHT_STRING);
+	pros::ADIDigitalIn Limit (LIMIT);
+	pros::Imu gyro1 (GYRO1);
+	pros::Imu gyro2 (GYRO2);
+	gyro1.reset(true); //blocking other tasks until it's done
+	gyro2.reset(true);
+
 
 	//pros::lcd::register_btn1_cb(on_center_button);
 }
@@ -55,9 +81,7 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	pros::Motor LeftUp(LEFTUP);
-	pros::Motor LeftMiddle(LEFTMIDDLE);
+	
 
 	// while (true) {
 	// 	pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
