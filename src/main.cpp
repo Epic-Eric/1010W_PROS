@@ -2,30 +2,14 @@
 #include "pros/adi.hpp"
 #include "pros/imu.hpp"
 #include "pros/motors.h"
+#include "pros/motors.hpp"
 #include "variables.h"
 
 void initialize() {
 	//Motors
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "Hello PROS User!");
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	pros::Motor LeftUp(LEFTUP, MOTOR_GEAR_BLUE, true);
-	pros::Motor LeftMiddle(LEFTMIDDLE, MOTOR_GEAR_BLUE);
-	pros::Motor LeftDown(LEFTDOWN, MOTOR_GEAR_BLUE, true);
-	pros::Motor RightUp(RIGHTUP, MOTOR_GEAR_BLUE);
-	pros::Motor RightMiddle(RIGHTMIDDLE, MOTOR_GEAR_BLUE, true);
-	pros::Motor RightDown(RIGHTDOWN, MOTOR_GEAR_BLUE);
-	pros::Motor Intake(INTAKE, MOTOR_GEAR_BLUE);
-	pros::Motor Cata(CATA, MOTOR_GEAR_RED);
 
-	//Sensors
-	pros::ADIEncoder TW_forw (FORW_TOP, FORW_BOTTOM);
-	pros::ADIEncoder TW_side (SIDE_TOP, SIDE_BOTTOM);
-	pros::ADIDigitalOut Left_string (LEFT_STRING);
-	pros::ADIDigitalOut Right_string (RIGHT_STRING);
-	pros::ADIDigitalIn Limit (LIMIT);
-	pros::Imu gyro1 (GYRO1);
-	pros::Imu gyro2 (GYRO2);
 	gyro1.reset(true); //blocking other tasks until it's done
 	gyro2.reset(true);
 
@@ -65,7 +49,9 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -81,7 +67,17 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	
+	left.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
+	right.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
+	Cata.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	Intake.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+
+	double turn = (double)master.get_analog(ANALOG_LEFT_Y)/(double)127*100; //controller joystick -127 -> 127
+	double forw = (double)master.get_analog(ANALOG_RIGHT_X)/(double)127*100;
+	double turnVolt = turnSensitivity*(turn*120); //PROS voltage go from -12000 -> 12000 volts
+	double forwVolt = forw * 120 * (1 - (std::abs(turnVolt)/12000 * turnImportance)); 
+	left.move_voltage(forwVolt + turnVolt);
+	right.move_voltage(forwVolt - turnVolt);
 
 	// while (true) {
 	// 	pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
