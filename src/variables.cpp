@@ -1,5 +1,6 @@
 #include "main.h"
 
+//Motors
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 pros::Motor LeftUp(LEFTUP, pros::E_MOTOR_GEAR_BLUE, true);
 pros::Motor LeftMiddle(LEFTMIDDLE, MOTOR_GEAR_BLUE);

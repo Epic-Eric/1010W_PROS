@@ -1,19 +1,78 @@
 #include "main.h"
 #include "pros/adi.hpp"
 #include "pros/imu.hpp"
+#include "pros/misc.h"
 #include "pros/motors.h"
 #include "pros/motors.hpp"
+#include "pros/rtos.hpp"
 #include "variables.h"
+#include "lemlib/api.hpp"
+
+//Lemlib drivetrain
+lemlib::Drivetrain_t drivetrain {
+    &left, // left drivetrain motors
+    &right, // right drivetrain motors
+    TRACKWIDTH, // track width
+    WHEELDIA, // wheel diameter
+    RPM // wheel rpm
+};
+
+//lemlib TWs
+lemlib::TrackingWheel forw_tracking_wheel(&TW_forw, TRACKDIA, FORW_DIS);
+lemlib::TrackingWheel side_tracking_wheel(&TW_side, TRACKDIA, SIDE_DIS);
+
+//lemlib odom
+lemlib::OdomSensors_t sensors {
+    &forw_tracking_wheel, // vertical tracking wheel 1
+    nullptr, // vertical tracking wheel 2 (don't have)
+    &side_tracking_wheel, // horizontal tracking wheel 1
+    nullptr, // we don't have a second tracking wheel, so we set it to nullptr
+    &gyro1 // inertial sensor
+};
+
+// forward/backward PID
+lemlib::ChassisController_t lateralController {
+    8, // kP
+    30, // kD
+    1, // smallErrorRange
+    100, // smallErrorTimeout
+    3, // largeErrorRange
+    500, // largeErrorTimeout
+    5 // slew rate
+};
+ 
+// turning PID
+lemlib::ChassisController_t angularController {
+    4, // kP
+    40, // kD
+    1, // smallErrorRange
+    100, // smallErrorTimeout
+    3, // largeErrorRange
+    500, // largeErrorTimeout
+    40 // slew rate
+};
+ 
+ 
+// create the chassis
+lemlib::Chassis chassis(drivetrain, lateralController, angularController, sensors);
+
+void screen(){
+	while (true) {
+        lemlib::Pose pose = chassis.getPose(); // get the current position of the robot
+        pros::lcd::print(0, "x: %f", pose.x); // print the x position
+        pros::lcd::print(1, "y: %f", pose.y); // print the y position
+        pros::lcd::print(2, "heading: %f", pose.theta); // print the heading
+        pros::delay(10);
+    }
+}
 
 void initialize() {
-	//Motors
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
-
-	gyro1.reset(true); //blocking other tasks until it's done
-	gyro2.reset(true);
-
-
+	//pros::lcd::set_text(1, "Hello PROS User!");
+	// gyro1.reset(true); //blocking other tasks until it's done
+	// gyro2.reset(true);
+	chassis.calibrate();
+	pros::Task screenTask(screen,TASK_PRIORITY_DEFAULT,TASK_STACK_DEPTH_DEFAULT,"Get robot position");
 	//pros::lcd::register_btn1_cb(on_center_button);
 }
 
@@ -67,17 +126,49 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+	//Break modes
 	left.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 	right.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 	Cata.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	Intake.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 
-	double turn = (double)master.get_analog(ANALOG_LEFT_Y)/(double)127*100; //controller joystick -127 -> 127
-	double forw = (double)master.get_analog(ANALOG_RIGHT_X)/(double)127*100;
-	double turnVolt = turnSensitivity*(turn*120); //PROS voltage go from -12000 -> 12000 volts
-	double forwVolt = forw * 120 * (1 - (std::abs(turnVolt)/12000 * turnImportance)); 
-	left.move_voltage(forwVolt + turnVolt);
-	right.move_voltage(forwVolt - turnVolt);
+	while(true){
+		//Chassis
+		double turn = (double)master.get_analog(ANALOG_RIGHT_X)/(double)127*100; //controller joystick -127 -> 127
+		double forw = (double)master.get_analog(ANALOG_LEFT_Y)/(double)127*100;
+		double turnVolt = turnSensitivity*(turn*120); //PROS voltage go from -12000 -> 12000 volts
+		double forwVolt = forw * 120 * (1 - (std::abs(turnVolt)/12000 * turnImportance)); 
+		left.move_voltage(forwVolt + turnVolt);
+		right.move_voltage(forwVolt - turnVolt);
+
+		//Intake and Roller
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+			Intake.move_voltage(12000);
+		}
+		else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+			Intake.move_voltage(-12000);
+		}
+		else Intake.brake();
+
+		//Cata
+		if(Limit.get_value()==0){ //0 for not pressed, 1 for pressed
+			Cata.move_voltage(12000);
+		}
+		else Cata.brake();
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+			while(Limit.get_value()==1) Cata.move_voltage(12000);
+		}
+
+		//Endgame
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
+			Left_string.set_value(1); // 1 for fire, 0 for not
+		}
+		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
+			Right_string.set_value(1);
+		}
+		pros::delay(2);
+	}
+
 
 	// while (true) {
 	// 	pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,

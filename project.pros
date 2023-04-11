@@ -4,6 +4,29 @@
     "project_name": "Lofi",
     "target": "v5",
     "templates": {
+      "LemLib": {
+        "location": "/Users/ericx/Library/Application Support/PROS/templates/LemLib@0.4.6",
+        "metadata": {
+          "origin": "local"
+        },
+        "name": "LemLib",
+        "py/object": "pros.conductor.templates.local_template.LocalTemplate",
+        "supported_kernels": "^3.8.0",
+        "system_files": [
+          "include\\lemlib\\logger.hpp",
+          "include\\lemlib\\pose.hpp",
+          "include\\lemlib\\api.hpp",
+          "include\\lemlib\\util.hpp",
+          "include\\lemlib\\chassis\\trackingWheel.hpp",
+          "include\\lemlib\\chassis\\odom.hpp",
+          "include\\lemlib\\pid.hpp",
+          "include\\lemlib\\chassis\\chassis.hpp",
+          "firmware\\LemLib.a"
+        ],
+        "target": "v5",
+        "user_files": [],
+        "version": "0.4.6"
+      },
       "kernel": {
         "location": "/Users/ericx/Library/Application Support/PROS/templates/kernel@3.8.0",
         "metadata": {
@@ -309,8 +332,10 @@
       }
     },
     "upload_options": {
-      "slot": 8,
-      "description": "1010W"
+      "description": "1010W",
+      "slot": 7,
+      "icon": "robot",
+      "after": "screen"
     }
   }
 }

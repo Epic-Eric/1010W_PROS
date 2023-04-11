@@ -26,7 +26,7 @@ inline constexpr char SIDE_BOTTOM = 'F';
 inline constexpr char LEFT_STRING = 'A';
 inline constexpr char RIGHT_STRING = 'C';
 inline constexpr char LIMIT = 'B';
-inline constexpr int GYRO1 = 21;
+inline constexpr int GYRO1 = 10;
 inline constexpr int GYRO2= 2;
 
 extern pros::Controller master;
@@ -54,5 +54,15 @@ extern pros::Motor myMotor;
 //opcontrol variables
 inline constexpr double turnImportance = 0.3; //How much turning slows down the speed of forward, 0 doesn't affect, 1 stops going forward
 inline constexpr double turnSensitivity = 0.8; //How sensitive a turn is, 0 doesn't turn, 1 most sensitive
+
+//Chassis + Odom variables
+inline constexpr int RPM = 480; //drivetrain RPM
+inline constexpr float WHEELDIA = 3.25; //drivetrain wheel diameter
+inline constexpr float TRACKWIDTH = 11; //distance between the center of left and right wheel
+inline constexpr float WHEELBASE = 9; //the distance of center of front and back wheel, not used
+
+inline constexpr float TRACKDIA = 2.75; //tracking wheel diameter
+inline constexpr float FORW_DIS = 2.1875; //distance perpendicular from forw tracking wheel to the center
+inline constexpr float SIDE_DIS = 1.875; //distance perpendicular from side tracking wheel to the center
 
 #endif
