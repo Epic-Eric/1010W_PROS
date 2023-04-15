@@ -3,6 +3,7 @@
 #include <math.h>
 #include <cmath>
 
+//if need the robot to turn to shoot, simply
 #define SQD(n) std::pow(n,2)
 
 int sign(double x) {
@@ -38,6 +39,7 @@ std::vector<double> get_intersection(std::vector<double> start, std::vector<doub
 
       float distance1 = get_dis(p2, intersection1);
       float distance2 = get_dis(p2, intersection2);
+      //distance = en
 
       std::vector<double> calc1 {(x1 + cur[0]), (y1 + cur[1])};
       std::vector<double> calc2 {(x2 + cur[0]), (y2 + cur[1])};
@@ -45,4 +47,5 @@ std::vector<double> get_intersection(std::vector<double> start, std::vector<doub
       if (distance1 < distance2) return calc1;
       if (distance1 > distance2) return calc2;
       return calc1;
+      //whichever point is closest to the end point on the long is chosen
 }
