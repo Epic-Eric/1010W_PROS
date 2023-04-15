@@ -1,12 +1,14 @@
 #include "main.h"
 #include "pros/adi.hpp"
 #include "pros/imu.hpp"
+#include "pros/llemu.hpp"
 #include "pros/misc.h"
 #include "pros/motors.h"
 #include "pros/motors.hpp"
 #include "pros/rtos.hpp"
 #include "variables.h"
 #include "lemlib/api.hpp"
+#define calc_distance(rot) (double) rot / 360 * 2.75 * M_PI
 
 //Lemlib drivetrain
 lemlib::Drivetrain_t drivetrain {
@@ -62,6 +64,9 @@ void screen(){
         pros::lcd::print(0, "x: %f", pose.x); // print the x position
         pros::lcd::print(1, "y: %f", pose.y); // print the y position
         pros::lcd::print(2, "heading: %f", pose.theta); // print the heading
+		pros::lcd::print(3, "front: %f inches", calc_distance(TW_forw.get_value()));
+		pros::lcd::print(4, "side: %f inches", calc_distance(TW_side.get_value()));
+		pros::lcd::print(5, "heading: %f degrees", gyro1.get_heading());
         pros::delay(10);
     }
 }
@@ -109,7 +114,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	
+	chassis.setPose(0, 0, 0); // X: 0, Y: 0, Heading: 0
 }
 
 /**
