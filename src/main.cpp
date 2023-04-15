@@ -1,12 +1,4 @@
 #include "main.h"
-#include "pros/adi.hpp"
-#include "pros/imu.hpp"
-#include "pros/llemu.hpp"
-#include "pros/misc.h"
-#include "pros/motors.h"
-#include "pros/motors.hpp"
-#include "pros/rtos.hpp"
-#include "variables.h"
 #include "lemlib/api.hpp"
 #define calc_distance(rot) (double) rot / 360 * 2.75 * M_PI
 

@@ -42,6 +42,15 @@
 #include "okapi/api.hpp"
 #include "okapi/squiggles/squiggles.hpp"
 #include "variables.h"
+#include "pros/adi.hpp"
+#include "pros/imu.hpp"
+#include "pros/llemu.hpp"
+#include "pros/misc.h"
+#include "pros/motors.h"
+#include "pros/motors.hpp"
+#include "pros/rtos.hpp"
+#include "variables.h"
+#include "PurePursuit.h"
 //#include "pros/api_legacy.h"
 
 /**
