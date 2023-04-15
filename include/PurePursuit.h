@@ -1,5 +1,5 @@
-#ifndef PurePursuit_h
-#define PurePursuit_h
+#ifndef purePursuit_h
+#define purePursuit_h
 
 #include <stdio.h>
 #include <vector>
