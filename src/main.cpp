@@ -1,5 +1,6 @@
 #include "main.h"
 #include "lemlib/api.hpp"
+#include "variables.h"
 #define calc_distance(rot) (double) rot / 360 * 2.75 * M_PI
 
 //Lemlib drivetrain
@@ -44,7 +45,7 @@ lemlib::ChassisController_t angularController {
     3, // largeErrorRange
     500, // largeErrorTimeout
     40 // slew rate
-};
+};;
  
  
 // create the chassis
@@ -59,6 +60,7 @@ void screen(){
 		pros::lcd::print(3, "front: %f inches", calc_distance(TW_forw.get_value()));
 		pros::lcd::print(4, "side: %f inches", calc_distance(TW_side.get_value()));
 		pros::lcd::print(5, "heading: %f degrees", gyro1.get_heading());
+		pros::lcd::print(6, "Intake: %f rpm", Intake.get_actual_velocity());
         pros::delay(10);
     }
 }
@@ -127,7 +129,7 @@ void opcontrol() {
 	left.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 	right.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 	Cata.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	Intake.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);; 
+	Intake.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 
 	while(true){
 		//Chassis
@@ -135,8 +137,8 @@ void opcontrol() {
 		double forw = (double)master.get_analog(ANALOG_LEFT_Y)/(double)127*100;
 		double turnVolt = turnSensitivity*(turn*120); //PROS voltage go from -12000 -> 12000 volts
 		double forwVolt = forw * 120 * (1 - (std::abs(turnVolt)/12000 * turnImportance)); 
-		left.move_voltage(forwVolt + turnVolt);
-		right.move_voltage(forwVolt - turnVolt);
+		left.move_voltage(forwVolt + turnVolt);//left
+		right.move_voltage(forwVolt - turnVolt);//right
 
 		//Intake and Roller
 		if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){

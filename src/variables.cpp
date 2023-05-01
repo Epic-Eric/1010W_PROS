@@ -2,11 +2,11 @@
 
 //Motors
 pros::Controller master(pros::E_CONTROLLER_MASTER);
-pros::Motor LeftUp(LEFTUP, pros::E_MOTOR_GEAR_BLUE, true);
-pros::Motor LeftMiddle(LEFTMIDDLE, MOTOR_GEAR_BLUE);
+pros::Motor LeftUp(LEFTUP, pros::E_MOTOR_GEAR_BLUE);
+pros::Motor LeftMiddle(LEFTMIDDLE, MOTOR_GEAR_BLUE, true);
 pros::Motor LeftDown(LEFTDOWN, MOTOR_GEAR_BLUE, true);
-pros::Motor RightUp(RIGHTUP, MOTOR_GEAR_BLUE);
-pros::Motor RightMiddle(RIGHTMIDDLE, MOTOR_GEAR_BLUE, true);
+pros::Motor RightUp(RIGHTUP, MOTOR_GEAR_BLUE, true);
+pros::Motor RightMiddle(RIGHTMIDDLE, MOTOR_GEAR_BLUE);
 pros::Motor RightDown(RIGHTDOWN, MOTOR_GEAR_BLUE);
 pros::Motor Intake(INTAKE, MOTOR_GEAR_BLUE);
 pros::Motor Cata(CATA, MOTOR_GEAR_RED);

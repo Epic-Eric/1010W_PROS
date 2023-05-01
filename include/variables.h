@@ -22,8 +22,8 @@ inline constexpr int CATA = 1;
 //Sensor Ports
 inline constexpr char FORW_TOP = 'G';
 inline constexpr char FORW_BOTTOM = 'H';
-inline constexpr char SIDE_TOP = 'E';
-inline constexpr char SIDE_BOTTOM = 'F';
+inline constexpr char SIDE_TOP = 'F';
+inline constexpr char SIDE_BOTTOM = 'E';
 inline constexpr char LEFT_STRING = 'B';
 inline constexpr char RIGHT_STRING = 'A';
 inline constexpr char LIMIT = 'C';
