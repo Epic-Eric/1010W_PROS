@@ -50,7 +50,7 @@
 #include "pros/motors.hpp"
 #include "pros/rtos.hpp"
 #include "variables.h"
-#include "PurePursuit.h"
+#include "purePursuit.h"
 //#include "pros/api_legacy.h"
 
 /**

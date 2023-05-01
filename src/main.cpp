@@ -127,7 +127,7 @@ void opcontrol() {
 	left.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 	right.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 	Cata.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	Intake.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	Intake.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);; 
 
 	while(true){
 		//Chassis

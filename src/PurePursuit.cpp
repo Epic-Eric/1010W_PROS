@@ -3,7 +3,6 @@
 #include <math.h>
 #include <cmath>
 
-//if need the robot to turn to shoot, simply
 #define SQD(n) std::pow(n,2)
 
 int sign(double x) {
@@ -15,6 +14,7 @@ int sign(double x) {
 double get_dis(std::vector<double> p1, std::vector<double> p2) {
   return std::sqrt(SQD(p1[0] - p2[0]) + SQD(p1[1] - p2[1]));
 }
+
 std::vector<double> get_intersection(std::vector<double> start, std::vector<double> end, std::vector<double> cur, double radius) {
       std::vector<double> p1 {start[0] - cur[0], start[1] - cur[1]};
       std::vector<double> p2 {end[0] - cur[0], end[1] - cur[1]};

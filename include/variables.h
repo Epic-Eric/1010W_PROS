@@ -6,28 +6,29 @@
 #include "pros/motors.h"
 #include "pros/motors.hpp"
 #include "pros/misc.hpp"
+#include <vector>
 
 
 //Drive Ports
-inline constexpr int LEFTUP = 11;
-inline constexpr int LEFTMIDDLE = 3;
-inline constexpr int LEFTDOWN = 4;
-inline constexpr int RIGHTUP = 17;
-inline constexpr int RIGHTMIDDLE = 13;
-inline constexpr int RIGHTDOWN = 16;
+inline constexpr int LEFTUP = 4;
+inline constexpr int LEFTMIDDLE = 15;
+inline constexpr int LEFTDOWN = 11;
+inline constexpr int RIGHTUP = 10;
+inline constexpr int RIGHTMIDDLE = 2;
+inline constexpr int RIGHTDOWN = 3;
 //Subsystem Ports
-inline constexpr int INTAKE = 19;
+inline constexpr int INTAKE = 18;
 inline constexpr int CATA = 1;
 //Sensor Ports
 inline constexpr char FORW_TOP = 'G';
 inline constexpr char FORW_BOTTOM = 'H';
 inline constexpr char SIDE_TOP = 'E';
 inline constexpr char SIDE_BOTTOM = 'F';
-inline constexpr char LEFT_STRING = 'A';
-inline constexpr char RIGHT_STRING = 'C';
-inline constexpr char LIMIT = 'B';
-inline constexpr int GYRO1 = 10;
-inline constexpr int GYRO2= 2;
+inline constexpr char LEFT_STRING = 'B';
+inline constexpr char RIGHT_STRING = 'A';
+inline constexpr char LIMIT = 'C';
+inline constexpr int GYRO1 = 5;
+inline constexpr int GYRO2= 99;
 
 extern pros::Controller master;
 extern pros::Motor LeftUp;
@@ -64,5 +65,14 @@ inline constexpr float WHEELBASE = 9; //the distance of center of front and back
 inline constexpr float TRACKDIA = 2.75; //tracking wheel diameter
 inline constexpr float FORW_DIS = 2.1875; //distance perpendicular from forw tracking wheel to the center
 inline constexpr float SIDE_DIS = 1.875; //distance perpendicular from side tracking wheel to the center
+
+//Pure Pursuit
+struct nodes{
+    int x1, y1, x2, y2, rad; //start x,y, end x,y, radius (in inches) //curr is provided with odom
+};
+inline std::vector<nodes> v = {
+    {0,0,10,10,5},
+    {10,10,5,5,5}
+};
 
 #endif
