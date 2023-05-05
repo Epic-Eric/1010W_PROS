@@ -1,5 +1,4 @@
 # Error Logs:
-<br />
 
 ## Apr 15th: 
 ### Problem: 
@@ -10,7 +9,6 @@ git pull, then "git config pull.rebase true". This rebases the branch. This actu
 main branch not needed anymore
 ### Solution:
 deleted it both locally and on GitHub
-<br />
 
 ## Apr 30th:
 ### Problem:
@@ -19,7 +17,6 @@ The drivetrain motors are wired but I wasn't sure if they are properly reversed,
 Tested each motor individually, see which should be reverse but aren't, and then it works perfectly.
 ### Progress:
 Odometry works!
-<br />
 
 ## May 4th:
 ### Problem:
