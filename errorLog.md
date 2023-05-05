@@ -1,5 +1,6 @@
 # Error Logs:
 
+
 ## Apr 15th: 
 ### Problem: 
 git push origin maste failed, due to "tip of your current branch is behind its remote counterpart". 
@@ -10,6 +11,7 @@ main branch not needed anymore
 ### Solution:
 deleted it both locally and on GitHub
 
+
 ## Apr 30th:
 ### Problem:
 The drivetrain motors are wired but I wasn't sure if they are properly reversed, which led to motor conflicts
@@ -17,6 +19,7 @@ The drivetrain motors are wired but I wasn't sure if they are properly reversed,
 Tested each motor individually, see which should be reverse but aren't, and then it works perfectly.
 ### Progress:
 Odometry works!
+
 
 ## May 4th:
 ### Problem:
