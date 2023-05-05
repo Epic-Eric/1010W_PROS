@@ -14,8 +14,8 @@ pros::MotorGroup left ({LeftUp,LeftMiddle,LeftDown});
 pros::MotorGroup right ({RightUp,RightMiddle,RightDown});
 
 //Sensors
-pros::ADIEncoder TW_forw (FORW_TOP, FORW_BOTTOM);
-pros::ADIEncoder TW_side (SIDE_TOP, SIDE_BOTTOM);
+pros::ADIEncoder TW_forw (FORW_TOP, FORW_BOTTOM, true);//false
+pros::ADIEncoder TW_side (SIDE_TOP, SIDE_BOTTOM, true);//false
 pros::ADIDigitalOut Left_string (LEFT_STRING);
 pros::ADIDigitalOut Right_string (RIGHT_STRING);
 pros::ADIDigitalIn Limit (LIMIT);

@@ -17,3 +17,9 @@ The drivetrain motors are wired but I wasn't sure if they are properly reversed,
 Tested each motor individually, see which should be reverse but aren't, and then it works perfectly.
 ### Progress:
 Odometry works!
+
+## May 4th:
+### Problem:
+Started CAD! Set up all the library containing all the parts. However, the add-ins that will be quite helpful for CADding for VEX are hard to download, as the address is: ~/Library/Application Support/Autodesk/Autodesk Fusion 360/API/AddIns, but Autodesk is a non-existent folder.
+### Solution:
+Reached out for help on VEX CAD Discord.
