@@ -108,7 +108,28 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	chassis.setPose(0, 0, 0); // X: 0, Y: 0, Heading: 0
+	int rollerDegrees = 200;
+	chassis.setPose(-58, 40, 90);//red roller
+	pros::delay(50);
+	chassis.moveTo(-59, 40, 1000);//move to red roller
+	pros::delay(50);
+	Intake.move_relative(rollerDegrees, 100);//spin roller
+	pros::delay(50);
+	chassis.moveTo(-42, 40, 1000);//move back
+	pros::delay(50);
+	chassis.turnTo(-42, 64, 1000);//turn to 2nd roller
+	pros::delay(50);
+	chassis.moveTo(-42, 64, 1000);//go to 2nd roller
+	pros::delay(50);
+	Intake.move_relative(rollerDegrees, 100);//spin roller
+	pros::delay(50);
+	chassis.moveTo(-42, 54, 1000);//back off
+	pros::delay(50);
+	chassis.turnTo(0, 0, 1000);//turn to middle
+	pros::delay(50);
+	Left_string.set_value(1); //shoot
+	pros::delay(50);
+	Right_string.set_value(1); //shoot
 }
 
 /**
