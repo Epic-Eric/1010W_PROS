@@ -1,10 +1,12 @@
 #include "main.h"
 #include "lemlib/api.hpp"
+#include "pros/misc.hpp"
 #include "variables.h"
 #define calc_distance(rot) (double) rot / 360 * 2.75 * M_PI
 
-float lKp, lKd, lslew;
-float aKp, aKd, aslew;
+float lKp = 12, lKd = 6.5, lslew;
+float aKp = 0.8, aKd = 0.5, aslew = 5;
+
 
 //Lemlib drivetrain
 lemlib::Drivetrain_t drivetrain {
@@ -64,6 +66,7 @@ void screen(){
 		pros::lcd::print(4, "side: %f inches", calc_distance(TW_side.get_value()));
 		pros::lcd::print(5, "heading: %f degrees", gyro1.get_heading());
 		pros::lcd::print(6, "Intake: %f rpm", Intake.get_actual_velocity());
+		master.print(1,1, "heading: %f", pose.theta);
         pros::delay(10);
     }
 }
@@ -111,36 +114,43 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	lKp = 0.1;
-	lKd = 0;
-	lslew = 5;
-	aKp = 0.1;
-	aKd = 0;
-	aslew = 10;
-	chassis.moveTo(0,10, 1000);
+	chassis.setPose(-58, 40, 261);//red roller
+	pros::delay(50);
+	chassis.moveTo(-62, 40, 1000);//move to red roller
+	pros::delay(50);
+	Intake.move_voltage(12000);//turns the roller full speed
+	pros::delay(300);
+	chassis.moveTo(-50, 40, 1000, 70);//move back
+	pros::delay(50);
+	Intake.move_voltage(-12000); //reverses intake so they are not in the way
+	pros::delay(50);
+	chassis.turnTo(-41, 68, 1000);//turn to 2nd roller at an angle
+	pros::delay(50);
+	chassis.moveTo(-41, 68, 1000, 40);//move to 2nd roller (roller still on turning)
+	pros::delay(150);
+	chassis.moveTo(-41, 60, 1000);//move back
+	pros::delay(50);
+	Intake.brake();
+	chassis.moveTo(-42, 55, 1000);//move back
+	pros::delay(50);
+	chassis.turnTo(0, 10, 1000, true);//turn to the right
+	pros::delay(50);
+	Left_string.set_value(1); //shoot
+	pros::delay(50);
+	Right_string.set_value(1); //shoot
 
-	// int rollerDegrees = 200;
-	// chassis.setPose(-58, 40, 90);//red roller
+	// chassis.turnTo(66, 68, 1000);//turn to the right
+	// 	pros::delay(50);
+	// chassis.moveTo(35, 68, 1000);//move to the right under the goal
 	// pros::delay(50);
-	// chassis.moveTo(-59, 40, 1000);//move to red roller
+	// chassis.turnTo(35, 0, 1000);//turn 45
 	// pros::delay(50);
-	// Intake.move_relative(rollerDegrees, 100);//spin roller
+	// chassis.moveTo(40, 25, 1000, 50);//move
 	// pros::delay(50);
-	// chassis.moveTo(-42, 40, 1000);//move back
+	// chassis.turnTo(20, 0, 1000);//move out
 	// pros::delay(50);
-	// chassis.turnTo(-42, 64, 1000);//turn to 2nd roller
+	// chassis.moveTo(40, 0, 1000);//move out
 	// pros::delay(50);
-	// chassis.moveTo(-42, 64, 1000);//go to 2nd roller
-	// pros::delay(50);
-	// Intake.move_relative(rollerDegrees, 100);//spin roller
-	// pros::delay(50);
-	// chassis.moveTo(-42, 54, 1000);//back off
-	// pros::delay(50);
-	// chassis.turnTo(0, 0, 1000);//turn to middle
-	// pros::delay(50);
-	// Left_string.set_value(1); //shoot
-	// pros::delay(50);
-	// Right_string.set_value(1); //shoot
 }
 
 /**

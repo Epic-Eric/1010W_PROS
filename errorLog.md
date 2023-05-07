@@ -23,3 +23,13 @@ Odometry works!
 Started CAD! Set up all the library containing all the parts. However, the add-ins that will be quite helpful for CADding for VEX are hard to download, as the address is: ~/Library/Application Support/Autodesk/Autodesk Fusion 360/API/AddIns, but Autodesk is a non-existent folder.
 ### Solution:
 Reached out for help on VEX CAD Discord.
+
+## May 6th:
+### Problem:
+Odometry doesn't work. When I move it to the right it is supposed to say an increasing x, but it's decreasing.
+### Solution:
+I reversed the direction when defining the encoders
+### Problem:
+Auto is not consistent
+### Solution:
+Implemented PD - Controller, changed the slew rate, path-planned for the robot to follow

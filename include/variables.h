@@ -14,7 +14,7 @@ inline constexpr int LEFTUP = 4;
 inline constexpr int LEFTMIDDLE = 15;
 inline constexpr int LEFTDOWN = 11;
 inline constexpr int RIGHTUP = 10;
-inline constexpr int RIGHTMIDDLE = 2;
+inline constexpr int RIGHTMIDDLE = 6;
 inline constexpr int RIGHTDOWN = 3;
 //Subsystem Ports
 inline constexpr int INTAKE = 18;
