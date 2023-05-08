@@ -119,7 +119,7 @@ void autonomous() {
 	chassis.moveTo(-62, 40, 1000);//move to red roller
 	pros::delay(50);
 	Intake.move_voltage(12000);//turns the roller full speed
-	pros::delay(300);
+	pros::delay(200);
 	chassis.moveTo(-50, 40, 1000, 70);//move back
 	pros::delay(50);
 	Intake.move_voltage(-12000); //reverses intake so they are not in the way
@@ -127,13 +127,19 @@ void autonomous() {
 	chassis.turnTo(-41, 68, 1000);//turn to 2nd roller at an angle
 	pros::delay(50);
 	chassis.moveTo(-41, 68, 1000, 40);//move to 2nd roller (roller still on turning)
-	pros::delay(150);
+	pros::delay(200);
 	chassis.moveTo(-41, 60, 1000);//move back
 	pros::delay(50);
 	Intake.brake();
 	chassis.moveTo(-42, 55, 1000);//move back
 	pros::delay(50);
-	chassis.turnTo(0, 10, 1000, true);//turn to the right
+	chassis.turnTo(-47, 47, 1000);//turn to get more tiles
+	pros::delay(50);
+	chassis.moveTo(-47, 47, 1000);//go to get more tiles
+	pros::delay(50);
+	chassis.moveTo(-54, 54, 1000);//go to get more tiles
+	pros::delay(50);
+	chassis.turnTo(0, 5, 1000, true);//turn to the center
 	pros::delay(50);
 	Left_string.set_value(1); //shoot
 	pros::delay(50);

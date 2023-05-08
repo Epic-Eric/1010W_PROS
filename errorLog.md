@@ -33,3 +33,11 @@ I reversed the direction when defining the encoders
 Auto is not consistent
 ### Solution:
 Implemented PD - Controller, changed the slew rate, path-planned for the robot to follow
+
+## May 7th:
+### Progress:
+Our 2022-2023 VEX Spin Up Season comes to an end, as we get 128 skills for auto and driver combined.
+### Problem:
+CAD Add-in library folder not found (Application Support/Autodesk not found)
+### Solution:
+There are actually 2 libraries, one is Mac/Library, one is mac/users/ericx/Library. They act as different folders, thus having different contents inside
